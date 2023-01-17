@@ -19,6 +19,7 @@ SonarQube is an open-source static testing analysis software, it is used by deve
   wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
   sudo apt-get update
   sudo apt-get -y install postgresql
+  systemctl status postgresql
   ```
 
 1. Set a password and connect to database (setting password as "admin" password)
@@ -42,7 +43,7 @@ SonarQube is an open-source static testing analysis software, it is used by deve
   systemctl status postgresql
   ```
 `check point`: You should see postgres is running on 5432
-
+netstat -tulpn 
 
 
 apt install net-tools
@@ -70,13 +71,14 @@ apt install net-tools
 
  ## SonarQube Setup
 
-1. Download [soarnqube](https://www.sonarqube.org/downloads/) and extract it.   
+1. Download [soarnqube](https://www.sonarqube.org/downloads/) and extract it.   in cd /opt
   ```sh 
   wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-8.9.2.46101.zip
   unzip sonarqube-8.9.2.46101.zip
   ```
 
-1. Update sonar.properties with below information 
+1. Update sonar.properties with below information (cd sonarqube-8.9.2.46101/ - ll - cd conf/ - vi sonar.properties)
+
   ```sh
   sonar.jdbc.username=<sonar_database_username>
   sonar.jdbc.password=<sonar_database_password>
@@ -111,11 +113,11 @@ apt install net-tools
   WantedBy=multi-user.target
   EOL
   ```
-
+  Goto cd /opt mv sonarqube-8.9.2.46101/ sonarqube
 1. Add sonar user and grant ownership to /opt/sonarqube directory 
   ```sh 
   useradd -d /opt/sonarqube sonar
-  chown -R sonar:sonar
+  chown -R sonar:sonar /opt/sonarqube
   ```
 
 1. Reload the demon and start sonarqube service 
